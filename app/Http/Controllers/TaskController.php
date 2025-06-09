@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('user_id', auth()->id())->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -20,14 +20,14 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        Task::create($data);
+        auth()->user()->tasks()->create($validated);
 
-        return redirect()->route('tasks.index')->with('success', 'Tarefa criada!');
+        return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso!');
     }
 
     public function show(Task $task)

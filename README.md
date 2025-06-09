@@ -13,7 +13,7 @@ Um gerenciador de tarefas simples feito com Laravel 12, Docker e MySQL.
 ## Como rodar
 
 ```bash
-git clone https://github.com/seuusuario/task-manager.git
+git clone https://github.com/behappyOS/task-manager.git
 cd task-manager
 docker-compose up -d --build
 

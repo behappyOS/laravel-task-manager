@@ -25,7 +25,7 @@ class TaskController extends Controller
             $query->whereDate('created_at', '<=', $request->end_date);
         }
 
-        $tasks = Task::paginate(10);
+        $tasks = $query->paginate(10)->withQueryString();
 
         return view('tasks.index', compact('tasks'));
     }

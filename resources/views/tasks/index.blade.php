@@ -73,7 +73,7 @@
                                 <td class="px-4 py-3 whitespace-normal break-words max-w-xs">{{ $task->title }}</td>
                                 <td class="px-4 py-3 whitespace-normal break-words max-w-md">{{ $task->description }}</td>
                                 <td class="px-4 py-3 text-center">
-                                    <select class="status-dropdown rounded border border-gray-300 px-2 pr-6 py-1 text-sm w-24" data-id="{{ $task->id }}">
+                                    <select class="status-dropdown rounded border border-gray-300 pr-6 py-1 text-sm w-24" data-id="{{ $task->id }}">
                                         <option value="0" {{ !$task->completed ? 'selected' : '' }}>Não</option>
                                         <option value="1" {{ $task->completed ? 'selected' : '' }}>Sim</option>
                                     </select>

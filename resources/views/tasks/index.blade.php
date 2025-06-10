@@ -12,7 +12,39 @@
 
                     <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-2">Nova Tarefa</a>
 
-                    @if (session('success'))
+                    <a href="{{ route('tasks.export.csv') }}" class="btn btn-outline-secondary">Exportar CSV</a>
+                    <a href="{{ route('tasks.export.pdf') }}" class="btn btn-outline-danger">Exportar PDF</a>
+
+                    <form method="GET" action="{{ route('tasks.index') }}" class="mb-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div>
+                            <label for="completed" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="completed" id="completed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                <option value="">-- Todos --</option>
+                                <option value="1" {{ request('completed') === '1' ? 'selected' : '' }}>Concluída</option>
+                                <option value="0" {{ request('completed') === '0' ? 'selected' : '' }}>Pendente</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="start_date" class="block text-sm font-medium text-gray-700">Data Inicial</label>
+                            <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        </div>
+
+                        <div>
+                            <label for="end_date" class="block text-sm font-medium text-gray-700">Data Final</label>
+                            <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        </div>
+
+                        <div class="flex items-end">
+                            <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                                Filtrar
+                            </button>
+                        </div>
+                    </form>
+
+                @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 

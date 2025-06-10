@@ -44,9 +44,13 @@
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                     </div>
 
-                    <div class="flex items-end">
-                        <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-indigo-600 hover:bg-indigo-700">
+                    <div class="items-end space-x-2">
+                        <button type="submit" class="inline-block justify-center py-2 px-4 border shadow-sm text-sm font-medium rounded-md text-gray-700 bg-indigo-600 hover:bg-indigo-700">
                             Filtrar
+                        </button>
+                        <button type="button" onclick="limparFiltros()"
+                                class="inline-block justify-center py-2 px-4 border shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-300 hover:bg-gray-400">
+                            Limpar Pesquisa
                         </button>
                     </div>
                 </form>
@@ -162,5 +166,10 @@
                 });
             });
         });
+
+        function limparFiltros() {
+            document.querySelector('form').reset();
+            window.location.href = "{{ route('tasks.index') }}";
+        }
     </script>
 </x-app-layout>

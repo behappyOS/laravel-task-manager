@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -25,7 +25,7 @@ class TaskController extends Controller
             $query->whereDate('created_at', '<=', $request->end_date);
         }
 
-        $tasks = $query->latest()->get();
+        $tasks = Task::paginate(10);
 
         return view('tasks.index', compact('tasks'));
     }
@@ -103,7 +103,7 @@ class TaskController extends Controller
     public function exportPdf()
     {
         $tasks = Task::where('user_id', auth()->id())->get();
-        $pdf = Pdf::loadView('tasks.pdf', compact('tasks'));
+        $pdf = PDF::loadView('tasks.pdf', compact('tasks'));
         return $pdf->download('tarefas.pdf');
     }
 

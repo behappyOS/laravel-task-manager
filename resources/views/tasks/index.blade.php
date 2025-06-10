@@ -7,85 +7,102 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
 
-                    <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-2">Nova Tarefa</a>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
 
-                    <a href="{{ route('tasks.export.csv') }}" class="btn btn-outline-secondary">Exportar CSV</a>
-                    <a href="{{ route('tasks.export.pdf') }}" class="btn btn-outline-danger">Exportar PDF</a>
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <a href="{{ route('tasks.create') }}" class="inline-block bg-indigo-600 text-gray-700 px-4 py-2 rounded-md hover:bg-indigo-700 shadow">
+                        Nova Tarefa
+                    </a>
+                    <a href="{{ route('tasks.export.csv') }}" class="inline-block border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50 shadow">
+                        Exportar CSV
+                    </a>
+                    <a href="{{ route('tasks.export.pdf') }}" class="inline-block border border-red-600 text-red-600 px-4 py-2 rounded-md hover:bg-red-50 shadow">
+                        Exportar PDF
+                    </a>
+                </div>
 
-                    <form method="GET" action="{{ route('tasks.index') }}" class="mb-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
-                        <div>
-                            <label for="completed" class="block text-sm font-medium text-gray-700">Status</label>
-                            <select name="completed" id="completed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                                <option value="">-- Todos --</option>
-                                <option value="1" {{ request('completed') === '1' ? 'selected' : '' }}>Concluída</option>
-                                <option value="0" {{ request('completed') === '0' ? 'selected' : '' }}>Pendente</option>
-                            </select>
-                        </div>
+                <form method="GET" action="{{ route('tasks.index') }}" class="mb-6 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div>
+                        <label for="completed" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select name="completed" id="completed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="">-- Todos --</option>
+                            <option value="1" {{ request('completed') === '1' ? 'selected' : '' }}>Concluída</option>
+                            <option value="0" {{ request('completed') === '0' ? 'selected' : '' }}>Pendente</option>
+                        </select>
+                    </div>
 
-                        <div>
-                            <label for="start_date" class="block text-sm font-medium text-gray-700">Data Inicial</label>
-                            <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        </div>
+                    <div>
+                        <label for="start_date" class="block text-sm font-medium text-gray-700">Data Inicial</label>
+                        <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
 
-                        <div>
-                            <label for="end_date" class="block text-sm font-medium text-gray-700">Data Final</label>
-                            <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        </div>
+                    <div>
+                        <label for="end_date" class="block text-sm font-medium text-gray-700">Data Final</label>
+                        <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
 
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                                Filtrar
-                            </button>
-                        </div>
-                    </form>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-indigo-600 hover:bg-indigo-700">
+                            Filtrar
+                        </button>
+                    </div>
+                </form>
 
                 @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+                    <div class="mb-6 rounded bg-green-100 text-green-800 p-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-                    <table class="table">
-                        <thead>
+                <div x-data="{ open: false, taskId: null }" class="w-full overflow-x-auto">
+                    <table class="min-w-full table-auto divide-y divide-gray-200 shadow-sm rounded-md overflow-hidden">
+                        <thead class="bg-gray-100">
                         <tr>
-                            <th>Título</th>
-                            <th>Descrição</th>
-                            <th>Concluída</th>
-                            <th>Ações</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Título</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Descrição</th>
+                            <th class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Concluída</th>
+                            <th class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Ações</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
                         @foreach ($tasks as $task)
-                            <tr>
-                                <td>{{ $task->title }}</td>
-                                <td>{{ $task->description }}</td>
-                                <td>
-                                    <select class="form-select form-select-sm status-dropdown" data-id="{{ $task->id }}">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 whitespace-normal break-words max-w-xs">{{ $task->title }}</td>
+                                <td class="px-4 py-3 whitespace-normal break-words max-w-md">{{ $task->description }}</td>
+                                <td class="px-4 py-3 text-center">
+                                    <select class="status-dropdown rounded border border-gray-300 px-2 pr-6 py-1 text-sm w-24" data-id="{{ $task->id }}">
                                         <option value="0" {{ !$task->completed ? 'selected' : '' }}>Não</option>
                                         <option value="1" {{ $task->completed ? 'selected' : '' }}>Sim</option>
                                     </select>
                                 </td>
-                                <td>
-                                    <a href="{{ route('tasks.edit', $task) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Confirma exclusão?')">Excluir</button>
-                                    </form>
+                                <td class="px-4 py-3 text-center space-x-2">
+                                    <a href="{{ route('tasks.edit', $task) }}"
+                                       class="inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-700 px-3 py-1 rounded shadow text-xs">
+                                        Editar
+                                    </a>
+                                    <button @click="open = true; taskId = {{ $task->id }}"
+                                            class="inline-block bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded shadow text-xs">
+                                        Excluir
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
 
+                    <div class="mt-6 flex justify-center">
+                        {{ $tasks->links('pagination::tailwind') }}
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     <script>
         $(document).ready(function () {
             $('.status-dropdown').change(function () {

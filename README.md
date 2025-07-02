@@ -50,7 +50,7 @@ Se precisar compilar assets:
 npm install
 npm run dev
 
-# ou, dentro do container node (se configurado):
+# ou, dentro do container node:
 docker exec -it laravel_node bash
 npm install
 npm run dev

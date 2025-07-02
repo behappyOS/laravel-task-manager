@@ -1,21 +1,21 @@
-# 📋 Laravel Task Manager
+# Laravel Task Manager
 
 Um gerenciador de tarefas completo feito com **Laravel 12**, **Docker**, **MySQL**, **Tailwind CSS**, **Alpine.js** e exportação de relatórios em PDF/CSV.
 
-## ✨ Principais funcionalidades
+## Principais funcionalidades
 
-- ✍️ Autenticação com Laravel Breeze (registro, login, logout, reset de senha e verificação de e-mail)
-- 🧑‍💼 Gestão de perfil do usuário (editar perfil, trocar senha, excluir conta)
-- ✅ CRUD de tarefas com marcação de conclusão via dropdown
-- 🗂️ Filtros por status e intervalo de datas
-- 🧹 Limpeza com botão “Limpar Pesquisa”
-- 🧾 Exportação de tarefas para CSV e PDF
-- 🗳️ Paginação com preservação dos filtros
-- ✅ Modal de confirmação para exclusão de tarefas (Alpine.js)
+- Autenticação com Laravel Breeze (registro, login, logout, reset de senha e verificação de e-mail)
+- Gestão de perfil do usuário (editar perfil, trocar senha, excluir conta)
+- CRUD de tarefas com marcação de conclusão via dropdown
+- Filtros por status e intervalo de datas
+- Limpeza com botão “Limpar Pesquisa”
+- Exportação de tarefas para CSV e PDF
+- Paginação com preservação dos filtros
+- Modal de confirmação para exclusão de tarefas (Alpine.js)
 
 ---
 
-## 🚀 Pré-requisitos
+## Pré-requisitos
 
 - Docker & Docker Compose instalado
 - Git
@@ -23,7 +23,7 @@ Um gerenciador de tarefas completo feito com **Laravel 12**, **Docker**, **MySQL
 
 ---
 
-## 🧱 Executando o projeto localmente (modo Docker)
+## Executando o projeto localmente (modo Docker)
 
 Clone e prepare o ambiente:
 
@@ -57,14 +57,14 @@ npm run dev
 ````
 ---
 
-## 🌐 Acessando a aplicação
+## Acessando a aplicação
 Frontend: http://localhost:8000
 
 API Vite (desenvolvimento): http://localhost:5173
 
 ---
 
-## 🧪 Testes
+## Testes
 O projeto já inclui testes com PHPUnit para:
 
 - Autenticação (registro, login, reset, e-verificação)
@@ -80,7 +80,7 @@ php artisan test
 
 ---
 
-## 🛠️ Fluxo de uso
+## Fluxo de uso
 
 1.Registre-se ou faça login
 
@@ -102,5 +102,5 @@ php artisan test
 
 ---
 
-## 📃 Licença
+## Licença
 MIT License – veja o arquivo LICENSE para detalhes.
